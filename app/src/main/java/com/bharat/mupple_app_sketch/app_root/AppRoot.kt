@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bharat.mupple_app_sketch.auth_feature.presentation.navigation.authNavGraph
+import com.bharat.mupple_app_sketch.legal_feature.presentation.navigation.legalNavGraph
 import com.bharat.mupple_app_sketch.main_feature.presentation.navigation.mainNavGraph
 
 @Composable
@@ -31,7 +32,7 @@ fun AppRoot(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.surface
+        color = Color.White
     ) {
 
         NavHost(
@@ -45,6 +46,8 @@ fun AppRoot(
             authNavGraph(navController)
 
             mainNavGraph(navController)
+
+            legalNavGraph(navController)
 
 
         }

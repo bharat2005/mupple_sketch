@@ -24,7 +24,8 @@ fun MyButton(
     contentColor : Color = Color.White,
     shape : Shape = RoundedCornerShape(24.dp),
     text : String ,
-    onClick : () -> Unit
+    onClick : () -> Unit,
+    textModifier : Modifier = Modifier
 ) {
     Box(
         modifier = modifier
@@ -33,7 +34,7 @@ fun MyButton(
             .clickable(onClick = onClick, indication = ripple(color = Color.Black, bounded = true), interactionSource = remember { MutableInteractionSource() }),
         contentAlignment = Alignment.Center
     ){
-        Text(text, color = contentColor)
+        Text(text, color = contentColor, modifier = textModifier)
     }
 
 }
