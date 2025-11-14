@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.bharat.mupple_app_sketch.app_root.AppRoot
 import com.bharat.mupple_app_sketch.ui.theme.Mupple_app_sketchTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,8 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Mupple_app_sketchTheme {
-
-
+                AppRoot()
             }
         }
     }

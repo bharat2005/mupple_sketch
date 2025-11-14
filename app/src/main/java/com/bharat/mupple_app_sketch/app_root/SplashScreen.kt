@@ -20,7 +20,7 @@ fun SplashScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        Box(modifier = Modifier.size(50.dp).background(Color.Black))
+        Box(modifier = Modifier.size(80.dp).background(Color.Black))
     }
 
 }

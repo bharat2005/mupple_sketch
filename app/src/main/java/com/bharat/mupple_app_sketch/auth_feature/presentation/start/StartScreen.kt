@@ -1,5 +1,6 @@
 package com.bharat.mupple_app_sketch.auth_feature.presentation.start
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +16,22 @@ import androidx.compose.ui.graphics.Color
 fun StartScreen(
 
 ) {
-     Box(
-         modifier = Modifier.fillMaxSize(),
-         contentAlignment = Alignment.Center
-     ){
-         Text("Start Screen")
-     }
+    Scaffold(
+        containerColor = Color.Transparent
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+
+
+
+
+        }
+
+
+    }
 
 }

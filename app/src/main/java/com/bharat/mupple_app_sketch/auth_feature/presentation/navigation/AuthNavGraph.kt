@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.bharat.mupple_app_sketch.app_root.AppRoutes
+import com.bharat.mupple_app_sketch.auth_feature.presentation.start.StartScreen
 
 fun NavGraphBuilder.authNavGraph(navController: NavController){
     navigation(
@@ -12,7 +13,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavController){
         startDestination = AuthRoutes.Start
     ){
         composable(AuthRoutes.Start) {
-
+            StartScreen()
         }
 
         composable(AuthRoutes.RegisterAuth) {
