@@ -92,8 +92,8 @@ fun RegisterAuthScreen(
 
     LaunchedEffect(uiState.registrationSuccess) {
         if(uiState.registrationSuccess){
-            Toast.makeText(context, "Registraion Success", Toast.LENGTH_LONG).show()
-
+            onAuthRegistrationSuccess()
+            viewModel.clearRegistraionSuccessFlag()
         }
     }
 

@@ -48,6 +48,10 @@ class RegisterAuthViewModel @Inject constructor(
         ) }
     }
 
+    fun clearRegistraionSuccessFlag(){
+        _uiState.update { it.copy(registrationSuccess = false) }
+    }
+
     fun onLocalGoogleRegistrationSuccess(idToken : String){
         val cred = GoogleAuthProvider.getCredential(idToken, null)
         viewModelScope.launch {
