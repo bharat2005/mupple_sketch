@@ -1,6 +1,8 @@
 package com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile
 
+import android.os.Build
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -34,6 +36,7 @@ import com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.co
 import com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.components.NickNameStep
 import com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.components.RegisterProfileStepIndicator
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RegisterProfileScreen(
     onExit : () -> Unit,
