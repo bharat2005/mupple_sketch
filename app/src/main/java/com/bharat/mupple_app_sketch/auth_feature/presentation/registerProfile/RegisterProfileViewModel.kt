@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.time.LocalDate
 import javax.inject.Inject
 
 enum class RegisterProfileSteps{
@@ -40,6 +41,19 @@ class RegisterProfileViewModel @Inject constructor(
     fun onGenderSelected(gender : Gender){
         _uiState.update { it.copy(
             userProfileDetails = it.userProfileDetails.copy(gender = gender)
+        ) }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun onDobChanged(dob : LocalDate){
+        _uiState.update { it.copy(
+            userProfileDetails = it.userProfileDetails.copy(dob = dob)
+        ) }
+    }
+
+    fun onNickNameChanged(nickname : String){
+        _uiState.update { it.copy(
+            userProfileDetails = it.userProfileDetails.copy(nickname = nickname)
         ) }
     }
 

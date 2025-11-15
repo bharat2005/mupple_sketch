@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,9 +42,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.RegisterProfileUiState
 import com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.RegisterProfileViewModel
 import com.bharat.mupple_app_sketch.core.components.MyButton
-
-
-
+import java.time.LocalDate
+import java.time.Year
+import java.time.YearMonth
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -52,9 +53,20 @@ fun DobStep(
     viewModel: RegisterProfileViewModel,
     uiState: RegisterProfileUiState
 ) {
+    val dob = uiState.userProfileDetails.dob
+
+    var selectedDay by remember {mutableStateOf(dob.dayOfMonth)}
+    var selectedMonth by remember { mutableStateOf(dob.monthValue) }
+    var selectedYear by remember { mutableStateOf(dob.year ) }
+
+    LaunchedEffect(dob) {
+        selectedDay = dob.dayOfMonth
+        selectedMonth = dob.monthValue
+        selectedYear = dob.year
+    }
 
     Column(
-        modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.ime).padding(horizontal = 24.dp, vertical = 16.dp),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 24.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         StepFrame(
@@ -63,7 +75,7 @@ fun DobStep(
         ) {
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 34.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 34.dp, vertical = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
@@ -76,12 +88,22 @@ fun DobStep(
                             )
                             minValue = 1
                             maxValue = 12
+                            value = selectedMonth
                             displayedValues = monthNames
                             setOnValueChangedListener { _,_,newMonth ->
-
+                                val selectedMonth = newMonth
+                                val newDob = safeDateOf(
+                                    selectedYear,
+                                    newMonth,
+                                    selectedDay
+                                )
+                                viewModel.onDobChanged(newDob)
                             }
 
                         }
+                    },
+                    update = { picker ->
+                        if(picker.value != selectedMonth) picker.value = selectedMonth
                     }
                 )
 
@@ -90,12 +112,23 @@ fun DobStep(
                     factory = { context ->
                         NumberPicker(context).apply {
                             minValue = 1
-                            maxValue = 30
-                            setOnValueChangedListener { _,_,newMonth ->
-
+                            maxValue = YearMonth.of(selectedYear, selectedMonth).lengthOfMonth()
+                            value = selectedDay
+                            setOnValueChangedListener { _,_,newDay ->
+                                val selectedDay = newDay
+                                val newDob = safeDateOf(
+                                    selectedYear,
+                                    selectedMonth,
+                                    newDay
+                                )
+                                viewModel.onDobChanged(newDob)
                             }
 
                         }
+                    },
+                    update = { picker ->
+                        if(picker.value != selectedDay) picker.value = selectedDay
+                        if(picker.maxValue != YearMonth.of(selectedYear, selectedMonth).lengthOfMonth()) picker.maxValue = YearMonth.of(selectedYear, selectedMonth).lengthOfMonth()
                     }
                 )
 
@@ -104,13 +137,24 @@ fun DobStep(
                 AndroidView(
                     factory = { context ->
                         NumberPicker(context).apply {
-                            minValue = 2025
-                            maxValue = 1950
-                            setOnValueChangedListener { _,_,newMonth ->
-
+                            val today = LocalDate.now()
+                            minValue = today.minusYears(30).year
+                            maxValue = today.minusYears(18).year
+                            value = selectedYear
+                            setOnValueChangedListener { _,_,newYear ->
+                                val selectedYear = newYear
+                                val newDob = safeDateOf(
+                                    newYear,
+                                    selectedMonth,
+                                    selectedDay
+                                )
+                                viewModel.onDobChanged(newDob)
                             }
 
                         }
+                    },
+                    update = { picker ->
+                        if(picker.value != selectedYear) picker.value = selectedYear
                     }
                 )
 
@@ -135,5 +179,13 @@ fun DobStep(
 
 
 }
+}
+
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun safeDateOf(year: Int, month : Int, day : Int) : LocalDate {
+    val monthLength = YearMonth.of(year, month).lengthOfMonth()
+    val correctDay = minOf(monthLength, day)
+    return LocalDate.of(year, month, correctDay)
 }
 
