@@ -40,6 +40,10 @@ fun RegisterProfileScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+
+
+
+
     Column(
         modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.systemBars)
     ) {
@@ -59,12 +63,30 @@ fun RegisterProfileScreen(
             }
         ) { targetState ->
             when(targetState){
-                RegisterProfileSteps.GENDER -> GenderStep()
-                RegisterProfileSteps.DOB -> DobStep()
-                RegisterProfileSteps.NICK_NAME -> NickNameStep()
-                RegisterProfileSteps.College -> CollegeStep()
-                RegisterProfileSteps.EMAIL_AUTH -> EmailAuthStep()
-                RegisterProfileSteps.END -> EndStep()
+                RegisterProfileSteps.GENDER -> GenderStep(
+                    viewModel,
+                    uiState
+                )
+                RegisterProfileSteps.DOB -> DobStep(
+                    viewModel,
+                    uiState
+                )
+                RegisterProfileSteps.NICK_NAME -> NickNameStep(
+                    viewModel,
+                    uiState
+                )
+                RegisterProfileSteps.College -> CollegeStep(
+                    viewModel,
+                    uiState
+                )
+                RegisterProfileSteps.EMAIL_AUTH -> EmailAuthStep(
+                    viewModel,
+                    uiState
+                )
+                RegisterProfileSteps.END -> EndStep(
+                    viewModel,
+                    uiState
+                )
 
             }
         }

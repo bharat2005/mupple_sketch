@@ -22,11 +22,8 @@ fun RegisterProfileStepIndicator(
 
 ) {
 
-    Box(
-        modifier = Modifier.fillMaxWidth().height(100.dp).padding(12.dp),
-    ){
         Row(
-            Modifier.fillMaxSize(),
+            Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 18.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -41,6 +38,5 @@ fun RegisterProfileStepIndicator(
 
 
         }
-    }
 
 }
