@@ -1,5 +1,6 @@
 package com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -40,15 +41,31 @@ fun RegisterProfileScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    fun handleBack() : Unit {
+        val currentStep = uiState.currentStep
+        if(currentStep == RegisterProfileSteps.GENDER){
+            onExit()
+        } else {
+            viewModel.goToPrevStep()
+        }
+    }
+
+    BackHandler {
+        handleBack()
+    }
+
+
 
 
 
 
     Column(
-        modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.systemBars)
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
     ) {
 
-        RegisterProfileStepIndicator()
+        RegisterProfileStepIndicator({ handleBack() }, viewModel, uiState)
 
         AnimatedContent(
             targetState = uiState.currentStep,
@@ -62,33 +79,40 @@ fun RegisterProfileScreen(
                 }
             }
         ) { targetState ->
-            when(targetState){
+
+            when(targetState) {
                 RegisterProfileSteps.GENDER -> GenderStep(
                     viewModel,
                     uiState
                 )
+
                 RegisterProfileSteps.DOB -> DobStep(
                     viewModel,
                     uiState
                 )
+
                 RegisterProfileSteps.NICK_NAME -> NickNameStep(
                     viewModel,
                     uiState
                 )
+
                 RegisterProfileSteps.College -> CollegeStep(
                     viewModel,
                     uiState
                 )
+
                 RegisterProfileSteps.EMAIL_AUTH -> EmailAuthStep(
                     viewModel,
                     uiState
                 )
+
                 RegisterProfileSteps.END -> EndStep(
                     viewModel,
                     uiState
                 )
 
             }
+
         }
 
 

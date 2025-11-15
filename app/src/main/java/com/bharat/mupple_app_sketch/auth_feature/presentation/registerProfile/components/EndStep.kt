@@ -18,14 +18,5 @@ fun EndStep(
     uiState: RegisterProfileUiState
 ) {
 
-    Box(
-        modifier = Modifier.fillMaxSize().background(Color.Magenta),
-        contentAlignment = Alignment.Center
-    ){
-        Text("EndStep")
-        Button(
-            onClick = {viewModel.goToNextStep()}
-        ) {Text("Next") }
-    }
 
 }
