@@ -25,16 +25,21 @@ fun MyButton(
     shape : Shape = RoundedCornerShape(24.dp),
     text : String ,
     onClick : () -> Unit,
+    enabled : Boolean = true,
     textModifier : Modifier = Modifier
 ) {
+    val myBgColor = if(enabled) backgroundColor else Color.LightGray
+    val myContentColor = if(enabled)  contentColor else Color.Gray
     Box(
         modifier = modifier
             .clip(shape)
-            .background(backgroundColor)
-            .clickable(onClick = onClick, indication = ripple(color = Color.Black, bounded = true), interactionSource = remember { MutableInteractionSource() }),
+            .background(myBgColor)
+            .then(
+                if(enabled) Modifier.clickable(onClick = onClick ,indication = ripple(color = Color.Black, bounded = true), interactionSource = remember { MutableInteractionSource() }) else Modifier
+            ),
         contentAlignment = Alignment.Center
     ){
-        Text(text, color = contentColor, modifier = textModifier)
+        Text(text, color = myContentColor, modifier = textModifier)
     }
 
 }

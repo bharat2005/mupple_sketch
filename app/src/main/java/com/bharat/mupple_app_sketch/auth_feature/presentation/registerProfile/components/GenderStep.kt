@@ -1,6 +1,9 @@
 package com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +34,7 @@ import com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.Re
 import com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile.RegisterProfileViewModel
 import com.bharat.mupple_app_sketch.core.components.MyButton
 import com.bharat.mupple_app_sketch.R
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun GenderStep(
     viewModel : RegisterProfileViewModel,
@@ -58,10 +62,14 @@ fun GenderStep(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(50.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .height(80.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .then(
+                                if(!isSelected) Modifier.border(width = 0.6.dp, Color.LightGray, RoundedCornerShape(12.dp)) else Modifier
+                            )
                             .background(bgColor)
-                            .clickable(onClick = {}),
+                            .clickable(onClick = {viewModel.onGenderSelected(gender)})
+                            .padding(horizontal = 24.dp),
                         contentAlignment = Alignment.Center
                     ){
                         if(isSelected){
@@ -85,9 +93,11 @@ fun GenderStep(
 
 
         MyButton(
+
             onClick = {viewModel.goToNextStep()},
             modifier = Modifier.fillMaxWidth().height(50.dp),
-            text = "Next"
+            text = "Next",
+            enabled = uiState.userProfileDetails.gender != null
         )
 
 

@@ -1,6 +1,9 @@
 package com.bharat.mupple_app_sketch.auth_feature.presentation.registerProfile
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
+import com.bharat.mupple_app_sketch.auth_feature.domain.model.Gender
 import com.bharat.mupple_app_sketch.auth_feature.domain.model.UserProfileDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +35,13 @@ class RegisterProfileViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(RegisterProfileUiState())
     val uiState = _uiState.asStateFlow()
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun onGenderSelected(gender : Gender){
+        _uiState.update { it.copy(
+            userProfileDetails = it.userProfileDetails.copy(gender = gender)
+        ) }
+    }
 
     fun goToNextStep(){
         val nextStep = when(_uiState.value.currentStep){
